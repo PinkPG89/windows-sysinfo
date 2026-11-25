@@ -103,25 +103,68 @@ fn pin_tray_icon(expected: usize) -> bool {
     promoted_count >= expected
 }
 
+/// 오류를 %LOCALAPPDATA%\SysmonTray\error.log 에 남긴다.
+/// 콘솔 없는 앱이라 패닉/오류가 나면 흔적 없이 종료되기 때문에 필요하다.
+fn log_error(msg: &str) {
+    use std::io::Write;
+    let Some(base) = std::env::var_os("LOCALAPPDATA") else {
+        return;
+    };
+    let dir = std::path::Path::new(&base).join("SysmonTray");
+    let _ = std::fs::create_dir_all(&dir);
+    if let Ok(mut f) = std::fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(dir.join("error.log"))
+    {
+        let secs = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|d| d.as_secs())
+            .unwrap_or(0);
+        let _ = writeln!(f, "[unix {}] {}", secs, msg);
+    }
+}
+
+/// 트레이 아이콘 생성. 로그인 직후에는 작업 표시줄이 아직 준비되지 않아
+/// 실패할 수 있으므로 최대 120초(1초 간격) 재시도한다.
+fn build_tray(menu: &Menu, tooltip: &str, color: [u8; 4]) -> Option<tray_icon::TrayIcon> {
+    for attempt in 1..=120 {
+        match TrayIconBuilder::new()
+            .with_menu(Box::new(menu.clone()))
+            .with_tooltip(tooltip)
+            .with_icon(make_icon(0.0, color))
+            .build()
+        {
+            Ok(t) => return Some(t),
+            Err(e) => {
+                if attempt == 1 || attempt % 30 == 0 {
+                    log_error(&format!("tray build failed (attempt {attempt}): {e}"));
+                }
+                std::thread::sleep(Duration::from_secs(1));
+            }
+        }
+    }
+    None
+}
+
 fn main() {
+    std::panic::set_hook(Box::new(|info| log_error(&format!("panic: {info}"))));
+
     let event_loop = EventLoopBuilder::new().build();
 
     let quit = MenuItem::new("종료", true, None);
     let menu = Menu::new();
-    menu.append(&quit).unwrap();
+    if let Err(e) = menu.append(&quit) {
+        log_error(&format!("menu append failed: {e}"));
+    }
 
-    let cpu_tray = TrayIconBuilder::new()
-        .with_menu(Box::new(menu.clone()))
-        .with_tooltip("CPU 측정 중...")
-        .with_icon(make_icon(0.0, CPU_COLOR))
-        .build()
-        .unwrap();
-    let ram_tray = TrayIconBuilder::new()
-        .with_menu(Box::new(menu))
-        .with_tooltip("RAM 측정 중...")
-        .with_icon(make_icon(0.0, RAM_COLOR))
-        .build()
-        .unwrap();
+    let (Some(cpu_tray), Some(ram_tray)) = (
+        build_tray(&menu, "CPU 측정 중...", CPU_COLOR),
+        build_tray(&menu, "RAM 측정 중...", RAM_COLOR),
+    ) else {
+        log_error("giving up: could not create tray icons");
+        return;
+    };
 
     let mut sys = System::new_with_specifics(
         RefreshKind::nothing()
