@@ -17,7 +17,7 @@ Rust로 작성되었고, 설치 용량은 약 0.5MB입니다.
 ## 설치
 
 [Releases](../../releases)에서 `SysmonTray-Setup.exe`를 받아 실행하세요. 관리자 권한이 필요 없습니다.
-자세한 내용은 [설치 설명서](installer/설치%20설명서.html)를 참고하세요.
+자세한 내용은 [설치 설명서](docs/설치%20설명서.html)를 참고하세요.
 
 > 코드 서명이 없어서 Windows SmartScreen 경고가 뜰 수 있습니다. **추가 정보 → 실행**을 누르면 됩니다.
 
@@ -41,7 +41,8 @@ powershell -ExecutionPolicy Bypass -File .\build-dist.ps1   # dist\SysmonTray-Se
 | 경로 | 설명 |
 |---|---|
 | `src/main.rs` | 트레이 아이콘 2개 생성, 1초마다 갱신, 레지스트리로 작업 표시줄 고정 |
-| `installer/` | Inno Setup 스크립트(`sysmon-tray.iss`)와 설치 설명서 |
+| `installer/` | Inno Setup 스크립트(`sysmon-tray.iss`) |
+| `docs/` | 설치 설명서 |
 | `build-dist.ps1` | 빌드 + `SysmonTray-Setup.exe` 생성 |
 | `.cargo/config.toml` | VC++ 런타임을 exe에 포함 (별도 설치 불필요) |
 

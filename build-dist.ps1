@@ -15,8 +15,13 @@ $iscc = @(
 ) | Where-Object { Test-Path $_ } | Select-Object -First 1
 if (-not $iscc) { throw 'Inno Setup 6 not found. Install: winget install JRSoftware.InnoSetup' }
 
+# Single source of truth for the version: Cargo.toml
+$m = Select-String -Path 'Cargo.toml' -Pattern '^version\s*=\s*"([^"]+)"' | Select-Object -First 1
+if (-not $m) { throw 'version not found in Cargo.toml' }
+$version = $m.Matches[0].Groups[1].Value
+
 Remove-Item (Join-Path $PSScriptRoot 'dist') -Recurse -Force -ErrorAction SilentlyContinue
-& $iscc 'installer\sysmon-tray.iss'
+& $iscc "/DAppVersion=$version" 'installer\sysmon-tray.iss'
 if ($LASTEXITCODE -ne 0) { throw 'Inno Setup compile failed' }
 
-Write-Host "Done: $(Join-Path $PSScriptRoot 'dist\SysmonTray-Setup.exe')"
+Write-Host "Done (v$version): $(Join-Path $PSScriptRoot 'dist\SysmonTray-Setup.exe')"

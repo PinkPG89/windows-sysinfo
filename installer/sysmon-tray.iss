@@ -2,7 +2,10 @@
 ; Build:  ISCC.exe installer\sysmon-tray.iss   (or run build-dist.ps1)
 
 #define AppName "Sysmon Tray"
-#define AppVersion "0.1.0"
+; AppVersion is passed by build-dist.ps1 from Cargo.toml (/DAppVersion=x.y.z)
+#ifndef AppVersion
+  #define AppVersion "0.0.0-dev"
+#endif
 #define AppExe "sysmon-tray.exe"
 
 [Setup]

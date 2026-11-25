@@ -1652,6 +1652,7 @@ dependencies = [
  "sysinfo",
  "tao",
  "tray-icon",
+ "windows-sys 0.59.0",
  "winreg",
 ]
 

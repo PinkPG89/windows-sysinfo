@@ -12,6 +12,12 @@ tray-icon = "0.19"
 tao = "0.30"
 sysinfo = "0.33"
 winreg = "0.52"
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+] }
 
 [profile.release]
 opt-level = "s"
