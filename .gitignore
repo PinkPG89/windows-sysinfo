@@ -1,0 +1,12 @@
+# Rust 빌드 결과물
+/target
+
+# 배포 패키지 (install 스크립트 + exe + zip)
+/dist
+
+# 에디터/OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store

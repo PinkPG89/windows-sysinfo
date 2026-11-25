@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sysmon Tray 설치 설명서</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2933; --muted: #5f6b7a; --line: #e2e6ea;
+    --card: #f6f8fa; --accent: #2864c8; --ok: #1e8c46; --warn: #d78c14; --bad: #c82828;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #14171a; --fg: #e6e9ec; --muted: #9aa5b1; --line: #2b3137; --card: #1c2126; --accent: #6ea0f0; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 16px/1.7 "Malgun Gothic", "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 40px 16px 80px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  p.lead { color: var(--muted); margin: 0 0 24px; }
+  ol, ul { padding-left: 22px; }
+  li { margin: 6px 0; }
+  code { background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px;
+         font: 14px Consolas, monospace; }
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin: 14px 0; }
+  .box.warn { border-left: 4px solid var(--warn); }
+  .box.note { border-left: 4px solid var(--accent); }
+  .icons { display: flex; gap: 16px; margin: 14px 0; flex-wrap: wrap; }
+  .icon { display: flex; align-items: center; gap: 10px; }
+  .icon i { width: 32px; height: 32px; border-radius: 3px; color: #fff; font: 700 17px/32px Consolas, monospace;
+            text-align: center; font-style: normal; }
+  .cpu { background: #1e8c46; } .ram { background: #2864c8; }
+  .mid { background: #d78c14; } .high { background: #c82828; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 15px; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--card); }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Sysmon Tray 설치 설명서</h1>
+<p class="lead">작업 표시줄 트레이에 CPU·RAM 사용률을 숫자로 보여 주는 가벼운 모니터링 프로그램입니다.</p>
+
+<h2>어떻게 보이나요?</h2>
+<div class="icons">
+  <div class="icon"><i class="cpu">37</i> CPU 사용률 (초록)</div>
+  <div class="icon"><i class="ram">52</i> RAM 사용률 (파랑)</div>
+  <div class="icon"><i class="mid">65</i> 50% 이상 (주황)</div>
+  <div class="icon"><i class="high">92</i> 80% 이상 (빨강)</div>
+</div>
+<p>아이콘의 숫자는 사용률(%)이며 1초마다 갱신됩니다. 마우스를 올리면 자세한 값이 툴팁으로 나옵니다.
+RAM은 사용량/전체 용량(GB)도 함께 표시됩니다.</p>
+
+<h2>설치 전 확인</h2>
+<ul>
+  <li>Windows 11 권장 (Windows 10에서도 동작하지만 트레이 고정은 수동으로 해야 합니다)</li>
+  <li>관리자 권한 <strong>불필요</strong> — 현재 사용자 계정에만 설치됩니다</li>
+  <li>필요 디스크 용량: 약 0.5MB, 별도 런타임 설치 불필요</li>
+</ul>
+
+<h2>설치 방법</h2>
+<ol>
+  <li>받은 <code>SysmonTray-Setup.zip</code> 파일을 <strong>압축 해제</strong>합니다. (압축 파일 안에서 바로 실행하지 마세요.)</li>
+  <li>폴더 안의 <code>install.bat</code>을 더블클릭합니다.</li>
+  <li>검은 창에 <code>Done.</code> 메시지가 나오면 설치 완료입니다. 아무 키나 눌러 창을 닫습니다.</li>
+  <li>시계 옆에 CPU(초록), RAM(파랑) 숫자 아이콘이 나타나는지 확인합니다.</li>
+</ol>
+
+<div class="box note">
+  <strong>설치되는 내용</strong>
+  <ul>
+    <li>설치 위치: <code>%LOCALAPPDATA%\Programs\SysmonTray</code></li>
+    <li>Windows 로그인 시 자동 실행</li>
+    <li>시작 메뉴에 “SysmonTray” 바로가기 추가</li>
+    <li>설정 → 앱 목록에 “Sysmon Tray” 등록 (제거용)</li>
+  </ul>
+</div>
+
+<h2>트레이에 아이콘이 안 보일 때</h2>
+<p>프로그램은 실행 시 아이콘을 작업 표시줄에 항상 보이도록 자동 설정합니다. 그래도 <code>^</code> 안에 숨어 있다면 아래 중 하나를 따라 하세요.</p>
+<ol>
+  <li>작업 표시줄의 <code>^</code>(숨겨진 아이콘)을 눌러 아이콘을 찾아 작업 표시줄 쪽으로 드래그합니다.</li>
+  <li>또는 <strong>설정 → 개인 설정 → 작업 표시줄 → 기타 시스템 트레이 아이콘</strong>에서 “Sysmon Tray”(두 항목)를 켭니다.</li>
+</ol>
+
+<h2>사용 방법</h2>
+<table>
+  <tr><th>동작</th><th>결과</th></tr>
+  <tr><td>아이콘에 마우스 올리기</td><td>CPU % 또는 RAM % 및 사용량(GB) 툴팁 표시</td></tr>
+  <tr><td>아이콘 우클릭 → 종료</td><td>CPU, RAM 아이콘이 모두 종료됨</td></tr>
+  <tr><td>시작 메뉴 → SysmonTray</td><td>종료한 뒤 다시 실행</td></tr>
+</table>
+
+<h2>제거 방법</h2>
+<ol>
+  <li><strong>설정 → 앱 → 설치된 앱</strong>에서 “Sysmon Tray”를 찾아 <strong>제거</strong>를 누릅니다.</li>
+  <li>프로그램 종료, 자동 실행 해제, 바로가기 삭제, 설치 폴더 삭제가 한 번에 진행됩니다.</li>
+</ol>
+
+<h2>문제 해결</h2>
+<table>
+  <tr><th>증상</th><th>해결</th></tr>
+  <tr>
+    <td>“Windows의 PC 보호” (SmartScreen) 경고가 뜸</td>
+    <td>이 프로그램은 코드 서명이 없어서 나타납니다. <strong>추가 정보 → 실행</strong>을 누르세요.
+        출처가 확실한 경우에만 진행하세요.</td>
+  </tr>
+  <tr>
+    <td>백신이 차단하거나 삭제함</td>
+    <td>설치 폴더(<code>%LOCALAPPDATA%\Programs\SysmonTray</code>)를 예외로 등록하거나 보안 담당자에게 문의하세요.</td>
+  </tr>
+  <tr>
+    <td><code>install.bat</code>이 실행되지 않음</td>
+    <td>압축을 풀었는지 확인하세요. 회사 PC에서 PowerShell 실행이 정책으로 막혀 있으면 설치할 수 없습니다.</td>
+  </tr>
+  <tr>
+    <td>아이콘이 하나만 보임</td>
+    <td>다른 아이콘이 <code>^</code> 안에 있을 수 있습니다. 위 “트레이에 아이콘이 안 보일 때”를 참고하세요.</td>
+  </tr>
+  <tr>
+    <td>재설치/업데이트하고 싶음</td>
+    <td>새 버전의 <code>install.bat</code>을 다시 실행하면 기존 프로그램을 종료하고 덮어씁니다.</td>
+  </tr>
+</table>
+
+</main>
+</body>
+</html>

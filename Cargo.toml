@@ -1,0 +1,19 @@
+[package]
+name = "sysmon-tray"
+version = "0.1.0"
+edition = "2021"
+description = "Windows system tray monitor showing CPU and RAM usage as taskbar icons"
+license = "MIT"
+readme = "README.md"
+# repository = "https://github.com/<your-id>/sysmon-tray"  # 저장소 생성 후 채우기
+
+[dependencies]
+tray-icon = "0.19"
+tao = "0.30"
+sysinfo = "0.33"
+winreg = "0.52"
+
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true
