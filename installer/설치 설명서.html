@@ -58,13 +58,14 @@ RAM은 사용량/전체 용량(GB)도 함께 표시됩니다.</p>
   <li>Windows 11 권장 (Windows 10에서도 동작하지만 트레이 고정은 수동으로 해야 합니다)</li>
   <li>관리자 권한 <strong>불필요</strong> — 현재 사용자 계정에만 설치됩니다</li>
   <li>필요 디스크 용량: 약 0.5MB, 별도 런타임 설치 불필요</li>
+  <li>설치 파일: <code>SysmonTray-Setup.exe</code> 하나</li>
 </ul>
 
 <h2>설치 방법</h2>
 <ol>
-  <li>받은 <code>SysmonTray-Setup.zip</code> 파일을 <strong>압축 해제</strong>합니다. (압축 파일 안에서 바로 실행하지 마세요.)</li>
-  <li>폴더 안의 <code>install.bat</code>을 더블클릭합니다.</li>
-  <li>검은 창에 <code>Done.</code> 메시지가 나오면 설치 완료입니다. 아무 키나 눌러 창을 닫습니다.</li>
+  <li><code>SysmonTray-Setup.exe</code>를 더블클릭합니다.</li>
+  <li>설치 마법사에서 <strong>다음</strong> → <strong>설치</strong>를 누릅니다. (설치 위치는 기본값 그대로 두면 됩니다.)</li>
+  <li>마지막 화면에서 “Sysmon Tray 실행”을 체크하고 <strong>마침</strong>을 누릅니다.</li>
   <li>시계 옆에 CPU(초록), RAM(파랑) 숫자 아이콘이 나타나는지 확인합니다.</li>
 </ol>
 
@@ -73,8 +74,9 @@ RAM은 사용량/전체 용량(GB)도 함께 표시됩니다.</p>
   <ul>
     <li>설치 위치: <code>%LOCALAPPDATA%\Programs\SysmonTray</code></li>
     <li>Windows 로그인 시 자동 실행</li>
-    <li>시작 메뉴에 “SysmonTray” 바로가기 추가</li>
+    <li>시작 메뉴에 “Sysmon Tray” 바로가기 추가</li>
     <li>설정 → 앱 목록에 “Sysmon Tray” 등록 (제거용)</li>
+    <li>이전 버전(zip + install.bat)이 설치되어 있으면 같은 위치에 덮어써서 업그레이드됩니다.</li>
   </ul>
 </div>
 
@@ -90,13 +92,14 @@ RAM은 사용량/전체 용량(GB)도 함께 표시됩니다.</p>
   <tr><th>동작</th><th>결과</th></tr>
   <tr><td>아이콘에 마우스 올리기</td><td>CPU % 또는 RAM % 및 사용량(GB) 툴팁 표시</td></tr>
   <tr><td>아이콘 우클릭 → 종료</td><td>CPU, RAM 아이콘이 모두 종료됨</td></tr>
-  <tr><td>시작 메뉴 → SysmonTray</td><td>종료한 뒤 다시 실행</td></tr>
+  <tr><td>시작 메뉴 → Sysmon Tray</td><td>종료한 뒤 다시 실행</td></tr>
 </table>
 
 <h2>제거 방법</h2>
 <ol>
   <li><strong>설정 → 앱 → 설치된 앱</strong>에서 “Sysmon Tray”를 찾아 <strong>제거</strong>를 누릅니다.</li>
   <li>프로그램 종료, 자동 실행 해제, 바로가기 삭제, 설치 폴더 삭제가 한 번에 진행됩니다.</li>
+  <li>설치 폴더(<code>%LOCALAPPDATA%\Programs\SysmonTray</code>)의 <code>unins000.exe</code>를 직접 실행해도 같습니다.</li>
 </ol>
 
 <h2>문제 해결</h2>
@@ -112,8 +115,8 @@ RAM은 사용량/전체 용량(GB)도 함께 표시됩니다.</p>
     <td>설치 폴더(<code>%LOCALAPPDATA%\Programs\SysmonTray</code>)를 예외로 등록하거나 보안 담당자에게 문의하세요.</td>
   </tr>
   <tr>
-    <td><code>install.bat</code>이 실행되지 않음</td>
-    <td>압축을 풀었는지 확인하세요. 회사 PC에서 PowerShell 실행이 정책으로 막혀 있으면 설치할 수 없습니다.</td>
+    <td>설치 파일이 실행되지 않거나 다운로드 직후 사라짐</td>
+    <td>브라우저나 백신이 차단한 것일 수 있습니다. 다운로드 폴더의 차단 해제 후 다시 실행하거나, 회사 PC라면 보안 담당자에게 문의하세요.</td>
   </tr>
   <tr>
     <td>아이콘이 하나만 보임</td>
@@ -121,7 +124,7 @@ RAM은 사용량/전체 용량(GB)도 함께 표시됩니다.</p>
   </tr>
   <tr>
     <td>재설치/업데이트하고 싶음</td>
-    <td>새 버전의 <code>install.bat</code>을 다시 실행하면 기존 프로그램을 종료하고 덮어씁니다.</td>
+    <td>새 버전의 <code>SysmonTray-Setup.exe</code>를 다시 실행하면 기존 프로그램을 종료하고 덮어씁니다.</td>
   </tr>
 </table>
 

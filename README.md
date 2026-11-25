@@ -16,8 +16,8 @@ Rust로 작성되었고, 설치 용량은 약 0.5MB입니다.
 
 ## 설치
 
-[Releases](../../releases)에서 `SysmonTray-Setup.zip`을 받아 압축을 풀고 `install.bat`을 실행하세요.
-자세한 내용은 압축 파일 안의 `설치 설명서.html`을 참고하세요.
+[Releases](../../releases)에서 `SysmonTray-Setup.exe`를 받아 실행하세요. 관리자 권한이 필요 없습니다.
+자세한 내용은 [설치 설명서](installer/설치%20설명서.html)를 참고하세요.
 
 > 코드 서명이 없어서 Windows SmartScreen 경고가 뜰 수 있습니다. **추가 정보 → 실행**을 누르면 됩니다.
 
@@ -25,14 +25,15 @@ Rust로 작성되었고, 설치 용량은 약 0.5MB입니다.
 
 ## 직접 빌드
 
-필요한 것: [Rust](https://rustup.rs) (stable), Visual Studio Build Tools (C++ 워크로드)
+필요한 것: [Rust](https://rustup.rs) (stable), Visual Studio Build Tools (C++ 워크로드),
+[Inno Setup 6](https://jrsoftware.org/isinfo.php) (`winget install JRSoftware.InnoSetup`, 설치 파일 생성용)
 
 ```powershell
 # 실행 파일만 빌드
 cargo build --release          # target\release\sysmon-tray.exe
 
-# 배포용 zip까지 생성
-powershell -ExecutionPolicy Bypass -File .\build-dist.ps1   # dist\SysmonTray-Setup.zip
+# 설치 파일(Setup.exe)까지 생성
+powershell -ExecutionPolicy Bypass -File .\build-dist.ps1   # dist\SysmonTray-Setup.exe
 ```
 
 ## 구조
@@ -40,8 +41,8 @@ powershell -ExecutionPolicy Bypass -File .\build-dist.ps1   # dist\SysmonTray-Se
 | 경로 | 설명 |
 |---|---|
 | `src/main.rs` | 트레이 아이콘 2개 생성, 1초마다 갱신, 레지스트리로 작업 표시줄 고정 |
-| `installer/` | 설치/제거 스크립트와 설명서 |
-| `build-dist.ps1` | 빌드 + 배포 zip 생성 |
+| `installer/` | Inno Setup 스크립트(`sysmon-tray.iss`)와 설치 설명서 |
+| `build-dist.ps1` | 빌드 + `SysmonTray-Setup.exe` 생성 |
 | `.cargo/config.toml` | VC++ 런타임을 exe에 포함 (별도 설치 불필요) |
 
 사용한 주요 크레이트: [`tray-icon`](https://crates.io/crates/tray-icon), [`tao`](https://crates.io/crates/tao), [`sysinfo`](https://crates.io/crates/sysinfo), [`winreg`](https://crates.io/crates/winreg)
